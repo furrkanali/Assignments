@@ -1,0 +1,7 @@
+Cards.csv dosyasını (input) okuyarak (file read) işleyip, ekteki Devices_html.png ile örneği gösterilen Devices.html şeklindeki basit rapor dosyasını oluşturacak (file write) python programını yazınız. Input dosyası aynı formatta gelmekle beraber, içerisinde daha fazla veri, daha fazla device-card olabilecektir. Dolayısıyla kodun aynı formatta gelen herhangi bir input dosyası ile çalışması beklenmektedir.
+
+Rapor özet olarak, sistemde kaç device, kaç card var, en yüksek sıcaklığa sahip card hangi device’a ait, ve alttaki tabloda da her device için özet olarak kaç card var, kaç tanesinin sıcaklığı 70 ve üzeri, en yüksek ve ortalama card sıcaklıkları nelerdir, bunlar html şeklinde gösteriliyor. Basit html tag’lerini de dosyayı yazarken python programınız ekleyecek. 
+
+Input ve output dosyalarının ismi sabit olup, script dosyanız ile aynı dizinde olabilir.
+
+Müşteri networkünde birden fazla device (ISAM_X) mevcuttur, her device üzerinde 1 den 16 ya kadar card (LTX) bulunmaktadır, her card’a ait bir sıcaklık değeri mevcuttur

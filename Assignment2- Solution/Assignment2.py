@@ -6,18 +6,22 @@ pon_counts = {}
 pon_utilization = {}
 devices_dict = {}
 
-csv_file1 = open('devices.csv', 'r') 
-reader1 = csv.reader(csv_file1, delimiter=',')
-next(reader1)
 
-csv_file2 = open('pon_ports.csv', 'r') 
-reader2 = csv.reader(csv_file2, delimiter=',')
-next(reader2)
+def read_csv(file_path):
+    csv_file = open(file_path, 'r')
+    reader = csv.reader(csv_file, delimiter=',')
+    next(reader)
+    return csv_file,reader
 
+def close_csv(csv_file):
+    csv_file.close()
+
+csv_file1, reader1  = read_csv('devices.csv')
 for row in reader1:
     devices_csv.append(row[0])
     devices_dict[row[0]] = row[1]
 
+csv_file2, reader2 = read_csv('pon_ports.csv')
 for object_id, pon_type, active_ont_count, max_ont_capacity in reader2:
     server, board, pon = object_id.split(':')
     active_ont_count = int(active_ont_count)
@@ -46,40 +50,35 @@ for server in dt_dict:
 sorted_pon_utilization = sorted(pon_utilization.items(), key=lambda x: x[1]['PON Utilization %'], reverse=True)
 sorted_pon_counts = sorted(pon_counts.items(), key=lambda x: x[1], reverse=True)
 
-with open('pon_counts.html', 'w') as f:
-    f.write('<html>\n')
-    f.write('<head>\n')
-    f.write('<title>PON Counts</title>\n')
-    f.write('</head>\n')
-    f.write('<body>\n')
-    f.write('<h1>PON Counts</h1>\n')
-    f.write('<table>\n')
-    f.write('<tr><th>Server</th><th>PON Type</th><th>Count</th><th>Devices</th></tr>\n')
-    for (server, pon_type), count in sorted_pon_counts:
-        devices = devices_dict.get(server, 'N/A')
-        f.write('<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>\n'.format(server, pon_type, count, devices))
-    f.write('</table>\n')
-    f.write('</body>\n')
-    f.write('</html>\n')
+html_file = open('report2.html', 'w')
+html_file.write('<html>\n')
+html_file.write('<head>\n')
+html_file.write('<h2>Pon Report</h2>\n')
+html_file.write('<style>\n')
+html_file.write('table, th, td {\n')
+html_file.write('  border: 1px solid black;\n')
+html_file.write('}\n')
+html_file.write('</style>\n')
+html_file.write('</head>\n')
+html_file.write('<body>\n')
+html_file.write('<h3>Pon Utilization of LT Boards</h3>\n')
+html_file.write('<table>\n')
+html_file.write('<tr><th>Server Name</th><th>Board Name</th><th>PON Utilization %</th></tr>\n')
+for item in sorted_pon_utilization:
+    server, board = item[0]
+    utilization = item[1]['PON Utilization %']
+    html_file.write(f'<tr><td>{server}</td><td>{board}</td><td>{utilization}</td></tr>\n')
+html_file.write('</table>\n')
+html_file.write('<h3>Counts of Pon Types in Servers</h3>\n')
+html_file.write('<table>\n')
+html_file.write('<tr><th>Server Type</th><th>Server Name</th><th>PON Type</th><th>Pon Count</th></tr>\n')
+for (server, pon_type), count in sorted_pon_counts:
+    devices = devices_dict.get(server, 'N/A')
+    html_file.write('<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>\n'.format(devices, server, pon_type, count))
+html_file.write('</table>\n')
+html_file.write('</body>\n')
+html_file.write('</html>\n')
 
-print('HTML file created:', os.path.abspath('pon_counts.html'))
-
-
-
-# with open('output.html', 'w') as file:
-#     # Write the HTML code
-#     file.write('<html>\n')
-#     file.write('<head>\n')
-#     file.write('<title>PON Utilization Report</title>\n')
-#     file.write('</head>\n')
-#     file.write('<body>\n')
-
-#     # Write the sorted_pon_utilization table
-#     file.write('<h2>PON Utilization</h2>\n')
-#     file.write('<table>\n')
-#     file.write('<tr><th>Server</th><th>Board</th><th>PON Utilization %</th></tr>\n')
-#     for item in sorted_pon_utilization:
-#         server, board = item[0]
-#         utilization = item[1]['PON Utilization %']
-#         file.write(f'<tr><td>{server}</td><td>{board}</td><td>{utilization}</td></tr>\n')
-#     file.write('</table>\n')
+close_csv(csv_file1)
+close_csv(csv_file2)
+html_file.close()
