@@ -1,0 +1,21 @@
+Object ID,PON Type,Active ONT Count,Max ONT Capacity
+Server_A:LT_Board_1:PON1,A+,12,32
+Server_A:LT_Board_1:PON2,C,2,16
+Server_A:LT_Board_1:PON3,F,27,64
+Server_A:LT_Board_1:PON4,A+,21,32
+Server_A:LT_Board_2:PON1,A+,12,32
+Server_A:LT_Board_2:PON2,C,2,16
+Server_A:LT_Board_2:PON3,A+,27,32
+Server_A:LT_Board_2:PON4,A+,21,32
+Server_A:LT_Board_2:PON11,A+,15,32
+Server_A:LT_Board_2:PON12,C,12,16
+Server_A:LT_Board_2:PON13,A,21,32
+Server_A:LT_Board_2:PON14,A+,2,32
+Server_B:LT_Board_1:PON1,A+,12,32
+Server_B:LT_Board_1:PON2,C,2,16
+Server_B:LT_Board_2:PON3,F,27,64
+Server_B:LT_Board_2:PON4,A+,21,32
+Server_C:LT_Board_2:PON1,A+,12,32
+Server_C:LT_Board_2:PON2,C,2,16
+Server_C:LT_Board_3:PON3,A+,27,32
+Server_C:LT_Board_3:PON4,A+,21,32
