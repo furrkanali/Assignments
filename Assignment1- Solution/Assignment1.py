@@ -66,5 +66,3 @@ html_file.write('</html>\n')
 
 csv_file.close()
 html_file.close()
-
-print(devices)
